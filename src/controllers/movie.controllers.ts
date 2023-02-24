@@ -17,7 +17,7 @@ const crateMovieController = async (req: Request, res: Response) => {
 
 const listMovieController = async (req: Request, res: Response) => {
 
-    const listMovies: IListMovie  = await listMoviesService()
+    const listMovies: IListMovie  = await listMoviesService(req.query)
 
     return res.status(200).json(listMovies)
 }
