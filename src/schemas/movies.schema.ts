@@ -17,9 +17,17 @@ const upSchema = movieCreateSchema.omit({name: true})
 
 const movieUpdateSchema = upSchema.partial()
 
+const returnListMovies = z.object({
+    prevPage: z.string().nullable(),
+    nextPage: z.string().nullable(),
+    count: z.number().int(),
+    data: z.array(movieResSchema)
+})
+
 export {
     movieCreateSchema,
     movieResSchema,
     returnListMovie,
-    movieUpdateSchema
+    movieUpdateSchema,
+    returnListMovies
 }

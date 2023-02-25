@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { IListMovie, iMovieCreate, iMovieRepo, iMovieUpdate } from '../interfaces'
+import { IListMovie, IListMoviesPag, iMovieCreate, iMovieRepo, iMovieUpdate } from '../interfaces'
 import createMovieService from '../services/createMovie.service'
 import deleteMovieService from '../services/deleteMovie.service'
 import listMoviesService from '../services/listMovies.service'
@@ -17,7 +17,7 @@ const crateMovieController = async (req: Request, res: Response) => {
 
 const listMovieController = async (req: Request, res: Response) => {
 
-    const listMovies: IListMovie  = await listMoviesService(req.query)
+    const listMovies: IListMoviesPag  = await listMoviesService(req.query)
 
     return res.status(200).json(listMovies)
 }

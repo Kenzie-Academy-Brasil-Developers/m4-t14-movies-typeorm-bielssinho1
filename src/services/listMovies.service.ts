@@ -1,16 +1,17 @@
 import { Repository } from 'typeorm'
 import { AppDataSource } from '../data-source'
 import { Movie } from '../entities'
+import { IListMoviesPag } from '../interfaces'
 import { returnListMovie } from '../schemas'
 
 
 
-const listMoviesService = async (payload: any): Promise<Movie[]> => {
+const listMoviesService = async (payload: any): Promise<IListMoviesPag> => {
 
     const movieRepository: Repository<Movie> = AppDataSource.getRepository(Movie)
     
-    const page: number = Number(payload.page) > 0 ? payload.page : 1
-    const perPage: number = Number(payload.perPage) > 0 && Number(payload.perPage) <= 5 ? payload.perPage : 5
+    const page: number = Number(payload.page) > 0 ? Number(payload.page) : 1
+    const perPage: number = Number(payload.perPage) > 0 && Number(payload.perPage) <= 5 ? Number(payload.perPage) : 5
     const order: string = !payload.order ? 'ASC' :  payload.order.toUpperCase() === 'ASC' || payload.order.toUpperCase() === 'DESC' ? payload.order.toUpperCase() : 'ASC'
     const sort: string = !payload.sort ? 'id' : payload.sort.toLowerCase() === 'price' || payload.sort.toLowerCase() === 'duration' ? payload.sort.toLowerCase() : 'id' 
 
@@ -22,11 +23,16 @@ const listMoviesService = async (payload: any): Promise<Movie[]> => {
         }
     })
 
-    console.log(listMovies)
+    const moviesList = returnListMovie.parse(listMovies)
 
-    const movies = returnListMovie.parse(listMovies)
+    const list = {
+        prevPage: page === 1 ? null : `http://localhost:3000/movies?page=${page}&perPage=${perPage}`,
+        nextPage: moviesList.length < 5 ? null : `http://localhost:3000/movies?page=${page + 1}&perPage=${perPage}`,
+        count: moviesList.length,
+        data: moviesList
+    }
 
-    return movies
+    return list
 }
 
 export default listMoviesService
