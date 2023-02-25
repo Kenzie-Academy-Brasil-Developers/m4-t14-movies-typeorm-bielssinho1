@@ -2,12 +2,14 @@ import  {
     movieCreateSchema,
     movieResSchema,
     returnListMovie,
-    movieUpdateSchema
+    movieUpdateSchema,
+    returnListMovies
 } from './movies.schema'
 
 export {
     movieCreateSchema,
     movieResSchema,
     returnListMovie,
-    movieUpdateSchema
+    movieUpdateSchema,
+    returnListMovies
 }
