@@ -23,11 +23,19 @@ const listMoviesService = async (payload: any): Promise<IListMoviesPag> => {
         }
     })
 
+    const listMoviesTest: Movie[] = await movieRepository.find({
+        take: perPage,
+        skip: perPage * (page),
+        order:{
+            [sort]: order
+        }
+    })
+    
     const moviesList = returnListMovie.parse(listMovies)
 
     const list = {
-        prevPage: page === 1 ? null : `http://localhost:3000/movies?page=${page}&perPage=${perPage}`,
-        nextPage: moviesList.length < 5 ? null : `http://localhost:3000/movies?page=${page + 1}&perPage=${perPage}`,
+        prevPage: page === 1 ? null : `http://localhost:3000/movies?page=${page - 1}&perPage=${perPage}`,
+        nextPage: listMoviesTest.length === 0 ? null : `http://localhost:3000/movies?page=${page + 1}&perPage=${perPage}`,
         count: moviesList.length,
         data: moviesList
     }
