@@ -8,7 +8,7 @@ import { movieResSchema } from '../schemas'
 const createMovieService = async (movieData: iMovieCreate) => {
 
     const movieRepository: Repository<Movie> = AppDataSource.getRepository(Movie)
-    
+
     const movie: Movie = movieRepository.create(movieData)
 
     await movieRepository.save(movie)

@@ -7,7 +7,7 @@ import { returnListMovie } from '../schemas'
 
 
 const listMoviesService = async (payload: any): Promise<IListMoviesPag> => {
-
+    
     const movieRepository: Repository<Movie> = AppDataSource.getRepository(Movie)
     
     const page: number = Number(payload.page) > 0 ? Number(payload.page) : 1
@@ -30,13 +30,15 @@ const listMoviesService = async (payload: any): Promise<IListMoviesPag> => {
             [sort]: order
         }
     })
+
+    const listMoviesWhitoutParams: Movie[] = await movieRepository.find()
     
     const moviesList = returnListMovie.parse(listMovies)
 
     const list = {
         prevPage: page === 1 ? null : `http://localhost:3000/movies?page=${page - 1}&perPage=${perPage}`,
         nextPage: listMoviesTest.length === 0 ? null : `http://localhost:3000/movies?page=${page + 1}&perPage=${perPage}`,
-        count: moviesList.length,
+        count: listMoviesWhitoutParams.length,
         data: moviesList
     }
 

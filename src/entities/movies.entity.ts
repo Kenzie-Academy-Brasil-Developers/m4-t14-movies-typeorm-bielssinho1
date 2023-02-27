@@ -14,7 +14,7 @@ class Movie {
     name: string
 
     @Column('text', { nullable: true })
-    description: string | null
+    description?: string | null
 
     @Column('int')
     duration: number
