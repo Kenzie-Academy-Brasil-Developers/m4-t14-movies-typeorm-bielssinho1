@@ -3,13 +3,13 @@ import { crateMovieController, deleteMovieController, listMovieController, updat
 import ensureDataIsValidMiddleware from '../middlewares/ensureDataIsValid.middleware'
 import ensureMovieExistsMiddleware from '../middlewares/ensureMovieExists.middleware'
 import ensureMovieExistsByIdMiddleware from '../middlewares/ensureMovieExistsById.middleware'
-import { movieCreateSchema } from '../schemas'
+import { movieCreateSchema, movieUpdateSchema } from '../schemas'
 
 const movieRouter: Router = Router()
 
 movieRouter.post('', ensureDataIsValidMiddleware(movieCreateSchema), ensureMovieExistsMiddleware, crateMovieController)
 movieRouter.get('', listMovieController)
-movieRouter.patch('/:id', ensureMovieExistsByIdMiddleware, updateMovieController)
+movieRouter.patch('/:id', ensureDataIsValidMiddleware(movieUpdateSchema), ensureMovieExistsByIdMiddleware, updateMovieController)
 movieRouter.delete('/:id', ensureMovieExistsByIdMiddleware, deleteMovieController)
 
 export default movieRouter

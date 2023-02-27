@@ -15,7 +15,7 @@ const ensureMovieExistsByIdMiddleware = async (req: Request, res: Response, next
     })
 
     if(!findMovie){
-        throw new AppError('User not found!', 404)
+        throw new AppError('Movie not found', 404)
     }
 
     return next()

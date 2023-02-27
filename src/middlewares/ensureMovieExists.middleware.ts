@@ -15,7 +15,7 @@ const ensureMovieExistsMiddleware = async (req: Request, res: Response, next: Ne
     })
 
     if(findMovie){
-        throw new AppError('User already exists!', 409)
+        throw new AppError('Name already exists.', 409)
     }
 
     return next()

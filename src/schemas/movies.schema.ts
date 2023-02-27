@@ -13,9 +13,7 @@ const movieResSchema = movieCreateSchema.extend({
 
 const returnListMovie = movieResSchema.array()
 
-const upSchema = movieCreateSchema.omit({name: true})
-
-const movieUpdateSchema = upSchema.partial()
+const movieUpdateSchema = movieCreateSchema.partial()
 
 const returnListMovies = z.object({
     prevPage: z.string().nullable(),
