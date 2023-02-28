@@ -12,7 +12,7 @@ const listMoviesService = async (payload: any): Promise<IListMoviesPag> => {
     
     const page: number = Number(payload.page) > 0 ? Number(payload.page) : 1
     const perPage: number = Number(payload.perPage) > 0 && Number(payload.perPage) <= 5 ? Number(payload.perPage) : 5
-    const order: string = !payload.order ? 'ASC' :  payload.order.toUpperCase() === 'ASC' || payload.order.toUpperCase() === 'DESC' ? payload.order.toUpperCase() : 'ASC'
+    const order: string = !payload.order || !payload.sort ? 'ASC' :  payload.order.toUpperCase() === 'ASC' || payload.order.toUpperCase() === 'DESC' ? payload.order.toUpperCase() : 'ASC'
     const sort: string = !payload.sort ? 'id' : payload.sort.toLowerCase() === 'price' || payload.sort.toLowerCase() === 'duration' ? payload.sort.toLowerCase() : 'id' 
 
     const listMovies: Movie[] = await movieRepository.find({
